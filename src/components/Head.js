@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { toggleMenu } from "../utils/appSlice";
 import { YOUTUBE_SEARCH_API } from "../utils/constants";
 import { chacheResults } from "../utils/searchSlice";
+import { Link } from "react-router-dom";
 
 const Head = () => {
   const dispatch = useDispatch();
@@ -33,7 +34,7 @@ const Head = () => {
     to do this in useEffect we have to clear the timer at the return 
   */
   const getSearchSuggestions = async () => {
-    console.log(searchQuery);
+    // console.log(searchQuery);
     const data = await fetch(YOUTUBE_SEARCH_API + searchQuery);
     const json = await data.json();
     // console.log(json);
@@ -45,6 +46,37 @@ const Head = () => {
       })
     );
   };
+  const suggestionsOnClick = (suggestion) => {
+    setSearchQuery(suggestion);
+    setShowSuggestions(false);
+  };
+
+  const handleInputFocus = () => {
+    setShowSuggestions(true);
+  };
+
+  const handleDocumentClick = (event) => {
+    // Close suggestions if clicked outside the input or suggestions
+    const inputElement = document.getElementById("searchInput");
+    const suggestionsElement = document.getElementById("suggestions");
+    if (
+      inputElement &&
+      !inputElement.contains(event.target) &&
+      suggestionsElement &&
+      !suggestionsElement.contains(event.target)
+    ) {
+      setShowSuggestions(false);
+    }
+  };
+  useEffect(() => {
+    // Add click event listener to the document body
+    document.body.addEventListener("click", handleDocumentClick);
+
+    return () => {
+      // Remove the event listener on component unmount
+      document.body.removeEventListener("click", handleDocumentClick);
+    };
+  }, []);
   return (
     <div className="grid grid-flow-col p-5 m-2 shadow-lg">
       {/* first section -- left Section*/}
@@ -67,23 +99,35 @@ const Head = () => {
       <div className="col-span-10 px-10">
         <div>
           <input
+            id="searchInput"
             className="w-1/2 border border-gray-400 px-5 p-2 rounded-l-full"
             type="text"
             onChange={(e) => setSearchQuery(e.target.value)}
-            onFocus={() => setShowSuggestions(true)}
-            onBlur={() => setShowSuggestions(false)}
+            onFocus={handleInputFocus}
+            value={searchQuery}
           />
-          <button className="border border-gray-400 px-5 py-2 rounded-r-full bg-gray-100">
-            🔍
-          </button>
+          <Link to={"/search?search_query=" + searchQuery}>
+            <button className="border border-gray-400 px-5 py-2 rounded-r-full bg-gray-100">
+              🔍
+            </button>
+          </Link>
         </div>
         {showSuggestions && (
-          <div className="fixed bg-white py-2 px-5 w-1/3 shadow-lg rounded-lg border border-gray-200 absolute">
+          <div
+            id="suggestions"
+            className="fixed bg-white py-2 px-5 w-1/3 shadow-lg rounded-lg border border-gray-200 absolute"
+          >
             <ul>
               {suggestions.map((s) => (
-                <li key={s} className="py-2 px-3 shadow-sm hover:bg-gray-100">
-                  🔍 {s}
-                </li>
+                <Link to={"/search?search_query=" + s}>
+                  <li
+                    onClick={() => suggestionsOnClick(s)}
+                    key={s}
+                    className="py-2 px-3 shadow-sm hover:bg-gray-100 cursor-pointer"
+                  >
+                    🔍 {s}
+                  </li>
+                </Link>
               ))}
             </ul>
           </div>

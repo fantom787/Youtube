@@ -1,6 +1,5 @@
 import React from "react";
 import { commentsData } from "../utils/constants";
-import Comment from "./Comment";
 import CommentsList from "./CommentsList";
 
 const CommentsContainer = () => {
