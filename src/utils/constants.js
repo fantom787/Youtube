@@ -137,3 +137,7 @@ export const commentsData = [
     replies: [],
   },
 ];
+
+export const OFFSET_LIVE_CHAT = 25;
+
+export const POLLING_RATE = 2000;
