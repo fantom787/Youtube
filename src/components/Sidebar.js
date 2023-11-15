@@ -11,23 +11,45 @@ const Sidebar = () => {
         <li>
           <Link to="/"> Home</Link>
         </li>
-        <li>Shorts</li>
-        <li>Videos</li>
-        <li>Live</li>
+        <Link to={"/search?search_query=" + "Shorts"}>
+          <li>Shorts</li>
+        </Link>
+        <Link to={"/search?search_query=" + "Videos"}>
+          <li>Videos</li>
+        </Link>
+        <Link to={"/search?search_query=" + "Live"}>
+          <li>Live</li>
+        </Link>
       </ul>
       <h1 className="font-bold pt-5">Subscriptions</h1>
       <ul>
-        <li>Music</li>
-        <li>Sports</li>
-        <li>Gaming</li>
-        <li>Movies</li>
+        <Link to={"/search?search_query=" + "Music"}>
+          <li>Music</li>
+        </Link>
+        <Link to={"/search?search_query=" + "Sports"}>
+          <li>Sports</li>
+        </Link>
+        <Link to={"/search?search_query=" + "Gaming"}>
+          <li>Gaming</li>
+        </Link>
+        <Link to={"/search?search_query=" + "Movies"}>
+          <li>Movies</li>
+        </Link>
       </ul>
       <h1 className="font-bold pt-5">Watch Later</h1>
       <ul>
-        <li>Music</li>
-        <li>Sports</li>
-        <li>Gaming</li>
-        <li>Movies</li>
+        <Link to={"/search?search_query=" + "Music"}>
+          <li>Music</li>
+        </Link>
+        <Link to={"/search?search_query=" + "Sports"}>
+          <li>Sports</li>
+        </Link>
+        <Link to={"/search?search_query=" + "Gaming"}>
+          <li>Gaming</li>
+        </Link>
+        <Link to={"/search?search_query=" + "Movies"}>
+          <li>Movies</li>
+        </Link>
       </ul>
     </div>
   );
