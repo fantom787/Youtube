@@ -97,7 +97,7 @@ const Head = () => {
       </div>
       {/* Second Section -Middle Secion  */}
       <div className="col-span-10 px-10">
-        <div>
+        <form action={"/search?search_query=" + searchQuery}>
           <input
             id="searchInput"
             className="w-1/2 border border-gray-400 px-5 p-2 rounded-l-full"
@@ -111,7 +111,7 @@ const Head = () => {
               🔍
             </button>
           </Link>
-        </div>
+        </form>
         {showSuggestions && (
           <div
             id="suggestions"
